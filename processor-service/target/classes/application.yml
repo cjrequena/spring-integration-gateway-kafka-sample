@@ -39,19 +39,10 @@ management.info.git.mode: full # Mode to use to expose git information.
 # KAFKA
 # see https://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/#consumer-groups
 # see https://docs.spring.io/autorepo/docs/spring-cloud-stream-binder-kafka-docs/1.1.0.M1/reference/htmlsingle/
-spring.cloud.stream:
-  instanceCount: 1 # The number of deployed instances of an application. Must be set for partitioning and if using Kafka.
-  #instanceIndex: # The instance index of the application: a number from 0 to instanceCount-1. Used for partitioning and with Kafka.
-  #dynamicDestinations: A list of destinations that can be bound dynamically (for example, in a dynamic routing scenario). If set, only listed destinations can be bound. Default: empty (allowing any destination to be bound).
-  defaultBinder: kafka # The default binder to use, if multiple binders are configured. See Multiple Binders on the Classpath.
-  overrideCloudConnectors: false # This property is only applicable when the cloud profile is active and Spring Cloud Connectors are provided with the application. If the property is false (the default), the binder will detect a suitable bound service
-#spring.cloud.stream.default:
-#  content-type: application/json # The content type of the channel.
 spring.cloud.stream.bindings:
   input:
     destination: request-topic # The target destination of a channel on the bound middleware (e.g., the RabbitMQ exchange or Kafka topic).
     group: group-1 # The consumer group of the channel. Applies only to inbound bindings. See Consumer Groups.
-    #content-type: application/x-java-object;type=com.sample.springcloudstream.sink.dto.FooDTO
     content-type: application/json
     binder: kafka # The binder used by this binding. See Multiple Binders on the Classpath for details.
   output:
@@ -79,7 +70,6 @@ spring.cloud.stream.kafka.binder:
 spring.cloud.sleuth:
   json:
     enabled: false
-
 
 # LOGGING
 logging.config: classpath:log4j2-local.xml # Location of the logging configuration file. For instance, `classpath:logback.xml` for Logback.

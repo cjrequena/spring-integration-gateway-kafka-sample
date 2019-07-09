@@ -1,11 +1,11 @@
 
 server.servlet.context-path: / # Context path of the application.
-server.port: ${SERVER_PORT:8080} # Server HTTP port.
+server.port: ${SERVER_PORT:1080} # Server HTTP port.
 
 ---
 spring:
   application:
-    name: gateway-service
+    name: gateway-service-2
   profiles:
     active: ${SPRING_PROFILES_ACTIVE:local}
   cloud:

@@ -35,6 +35,7 @@ public class ProcessorMainApplication {
   @StreamListener(Processor.INPUT)
   @SendTo(Processor.OUTPUT)
   public Message<?> process(Message<String> request) {
+    log.debug("instance_id {}", request.getHeaders().get("instance_id"));
     return MessageBuilder.withPayload(request.getPayload().toUpperCase())
       .copyHeaders(request.getHeaders())
       .build();

@@ -17,8 +17,8 @@ import java.util.UUID;
 @EnableIntegration
 public class GatewayConfiguration {
 
-  //public static final UUID instanceUUID = UUID.randomUUID();
-  public static final String instanceUUID = "GATEWAY_1";
+  //ublic static final UUID instanceUUID = UUID.randomUUID();
+  public static final String instanceUUID = "GATEWAY_2";
 
   @Bean
   @IntegrationConverter

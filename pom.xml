@@ -10,6 +10,7 @@
     <modules>
         <module>gateway-service</module>
         <module>processor-service</module>
+        <module>gateway-service-2</module>
     </modules>
     <!-- -->
     <properties>

@@ -69,7 +69,6 @@ spring.cloud.stream.kafka.binder:
 spring.cloud.sleuth:
   json:
     enabled: false
-
 # LOGGING
 logging.config: classpath:log4j2-local.xml # Location of the logging configuration file. For instance, `classpath:logback.xml` for Logback.
 logging.file: log4j2-local.xml # Log file name (for instance, `myapp.log`). Names can be an exact location or relative to the current directory.
