@@ -1,0 +1,94 @@
+# - http://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html
+# - https://github.com/spring-cloud/spring-cloud-config/blob/d9113a417dccff271744be3a4039e270b0cebd76/docs/src/main/asciidoc/spring-cloud-config.adoc#quick-start
+# - https://github.com/spring-cloud/spring-cloud-consul/blob/master/docs/src/main/asciidoc/spring-cloud-consul.adoc
+# - https://github.com/spring-cloud/spring-cloud-netflix/blob/8fb89b25d955fe175410853cea3b09333ef32d74/docs/src/main/asciidoc/spring-cloud-netflix.adoc
+# - https://github.com/Netflix
+# - https://github.com/Netflix/Hystrix/wiki/Configuration#intro
+# - https://github.com/Netflix/eureka/wiki/Configuring-Eureka
+# - https://github.com/Netflix/Turbine/wiki/Configuration-(1.x)
+
+
+#-----------------------------------------------------------------------------------------------
+# PROFILE LOCAL
+#-----------------------------------------------------------------------------------------------
+spring:
+  profiles: local
+
+# ----------------------------------------
+# ACTUATOR PROPERTIES
+# ----------------------------------------
+# ENDPOINTS WEB CONFIGURATION
+management.endpoints.web.exposure.include: '*' # Endpoint IDs that should be included or '*' for all.
+management.endpoints.web.exposure.exclude:  # Endpoint IDs that should be excluded or '*' for all.
+management.endpoints.web.base-path: /management # Base path for Web endpoints. Relative to server.servlet.context-path or management.server.servlet.context-path if management.server.port is configured.
+management.endpoints.web.path-mapping.health: healthcheck
+
+# HEALTH ENDPOINT
+management.endpoint.health.cache.time-to-live: 0ms # Maximum time that a response can be cached.
+management.endpoint.health.enabled: true # Whether to enable the health endpoint.
+management.endpoint.health.roles:  # Roles used to determine whether or not a user is authorized to be shown details. When empty, all authenticated users are authorized.
+management.endpoint.health.show-details: always # When to show full health details.
+
+# INFO CONTRIBUTORS (InfoContributorProperties)
+management.info.build.enabled: true # Whether to enable build info.
+management.info.defaults.enabled: true # Whether to enable default info contributors.
+management.info.env.enabled: true # Whether to enable environment info.
+management.info.git.enabled: true # Whether to enable git info.
+management.info.git.mode: full # Mode to use to expose git information.
+
+# KAFKA
+# see https://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/#consumer-groups
+# see https://docs.spring.io/autorepo/docs/spring-cloud-stream-binder-kafka-docs/1.1.0.M1/reference/htmlsingle/
+spring.cloud.stream:
+  instanceCount: 1 # The number of deployed instances of an application. Must be set for partitioning and if using Kafka.
+  #instanceIndex: # The instance index of the application: a number from 0 to instanceCount-1. Used for partitioning and with Kafka.
+  #dynamicDestinations: A list of destinations that can be bound dynamically (for example, in a dynamic routing scenario). If set, only listed destinations can be bound. Default: empty (allowing any destination to be bound).
+  defaultBinder: kafka # The default binder to use, if multiple binders are configured. See Multiple Binders on the Classpath.
+  overrideCloudConnectors: false # This property is only applicable when the cloud profile is active and Spring Cloud Connectors are provided with the application. If the property is false (the default), the binder will detect a suitable bound service
+#spring.cloud.stream.default:
+#  content-type: application/json # The content type of the channel.
+spring.cloud.stream.bindings:
+  request_channel:
+    destination: request-topic # The target destination of a channel on the bound middleware (e.g., the RabbitMQ exchange or Kafka topic).
+    group: request-group # The consumer group of the channel. Applies only to inbound bindings. See Consumer Groups.
+    #content-type: application/x-java-object;type=com.sample.springcloudstream.sink.dto.FooDTO
+    content-type: application/json
+    binder: kafka # The binder used by this binding. See Multiple Binders on the Classpath for details.
+  reply_channel:
+    destination: reply-topic # The target destination of a channel on the bound middleware (e.g., the RabbitMQ exchange or Kafka topic).
+    group: reply-group # The consumer group of the channel. Applies only to inbound bindings. See Consumer Groups.
+    #content-type: application/x-java-object;type=com.sample.springcloudstream.sink.dto.FooDTO
+    content-type: application/json
+    binder: kafka # The binder used by this binding. See Multiple Binders on the Classpath for details.
+  input:
+    destination: request-topic
+  output:
+    destination: reply-topic
+spring.cloud.stream.kafka.binder:
+  brokers: localhost # A list of brokers to which the Kafka binder will connect.
+  defaultBrokerPort: 9092 # This sets the default port when no port is configured in the broker list
+  zkNodes: localhost # A list of ZooKeeper nodes to which the Kafka binder can connect.
+  defaultZkPort: 2181 # This sets the default port when no port is configured in the node list
+  #configuration: # Key/Value map of client properties (both producers and consumer) passed to all clients created by the binder. Due to the fact that these properties will be used by both producers and consumers, usage should be restricted to common properties, especially security settings. Default: Empty map.
+  headers: x-retries #  The list of custom headers that will be transported by the binder. Default: empty.
+  healthTimeout: 60 # The time to wait to get partition information in seconds; default 60. Health will report as down if this timer expires.
+  offsetUpdateTimeWindow: 10000 # The frequency, in milliseconds, with which offsets are saved. Ignored if 0.
+  offsetUpdateCount: 0 # The frequency, in number of updates, which which consumed offsets are persisted. Ignored if 0. Mutually exclusive with offsetUpdateTimeWindow
+  requiredAcks: 1 # The number of required acks on the broker.
+  minPartitionCount: 1 # Effective only if autoCreateTopics or autoAddPartitions is set
+  replicationFactor: 1 # The replication factor of auto-created topics if autoCreateTopics is active.
+  autoCreateTopics: true # If set to true, the binder will create new topics automatically.
+  autoAddPartitions: true # If set to true, the binder will create add new partitions if required
+  socketBufferSize: 1000000000 # Size (in bytes) of the socket buffer to be used by the Kafka consumers
+spring.cloud.sleuth:
+  json:
+    enabled: false
+
+
+# LOGGING
+logging.config: classpath:log4j2-local.xml # Location of the logging configuration file. For instance, `classpath:logback.xml` for Logback.
+logging.file: log4j2-local.xml # Log file name (for instance, `myapp.log`). Names can be an exact location or relative to the current directory.
+logging.level: # Log levels severity mapping. For instance, `logging.level.org.springframework: DEBUG`.
+  org.springframework: INFO
+  io.swagger.models.*: ERROR
+  com.sample.*: DEBUG
