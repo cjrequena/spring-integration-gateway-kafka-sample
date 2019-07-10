@@ -1,5 +1,6 @@
 package com.sample;
 
+import com.sample.dto.FooDTO;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -32,11 +33,23 @@ public class ProcessorMainApplication {
     }
   }
 
+//  @StreamListener(Processor.INPUT)
+//  @SendTo(Processor.OUTPUT)
+//  public Message<?> process(Message<String> request) {
+//    log.debug("instance_id {}", request.getHeaders().get("instance_id"));
+//    return MessageBuilder.withPayload(request.getPayload().toUpperCase())
+//      .copyHeaders(request.getHeaders())
+//      .build();
+//  }
+
   @StreamListener(Processor.INPUT)
   @SendTo(Processor.OUTPUT)
   public Message<?> process(Message<String> request) {
     log.debug("instance_id {}", request.getHeaders().get("instance_id"));
-    return MessageBuilder.withPayload(request.getPayload().toUpperCase())
+    FooDTO fooDTO = new FooDTO();
+    fooDTO.setId( request.getHeaders().get("instance_id").toString());
+    fooDTO.setName(request.getPayload().toUpperCase());
+    return MessageBuilder.withPayload(fooDTO)
       .copyHeaders(request.getHeaders())
       .build();
   }
