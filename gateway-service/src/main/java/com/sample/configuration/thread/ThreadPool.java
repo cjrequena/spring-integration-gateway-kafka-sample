@@ -17,9 +17,9 @@ import java.util.concurrent.TimeUnit;
 @Data
 @Configuration
 public class ThreadPool {
-  @Value("${core.pool.size:1}")
+  @Value("${core.pool.size:10}")
   private int corePoolSize;
-  @Value("${max.pool.size:3}")
+  @Value("${max.pool.size:10}")
   private int maxPoolSize;
   @Value("${keep.alive.time:10}")
   private long keepAliveTime;

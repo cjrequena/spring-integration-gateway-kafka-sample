@@ -34,8 +34,9 @@ public class ThreadPoolMonitor implements Runnable {
     strBuff.append(" - MaximumPoolSize : ").append(executor.getMaximumPoolSize());
     strBuff.append(" - ActiveTaskCount : ").append(executor.getActiveCount());
     strBuff.append(" - CompletedTaskCount : ").append(executor.getCompletedTaskCount());
+    strBuff.append(" - UnCompletedTaskCount : ").append(executor.getTaskCount() - executor.getCompletedTaskCount());
     strBuff.append(" - TotalTaskCount : ").append(executor.getTaskCount());
     strBuff.append(" - isTerminated : ").append(executor.isTerminated());
-    log.debug(strBuff.toString());
+    log.trace(strBuff.toString());
   }
 }

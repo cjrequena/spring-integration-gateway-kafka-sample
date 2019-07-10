@@ -14,5 +14,6 @@
         </Root>
         <Logger name="org.springframework" level="WARN"/>
         <Logger name="com.sample" level="DEBUG"/>
+        <Logger name="com.sample.configuration.thread" level="TRACE"/>
     </Loggers>
 </Configuration>
