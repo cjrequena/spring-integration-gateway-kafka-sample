@@ -35,7 +35,7 @@ spring:
         # Timeout to deregister services critical for longer than timeout (e.g. 30m).
         healthCheckCriticalTimeout: ${SPRING_CLOUD_CONSUL_DISCOVERY_HEALTHCHECKCRITICALTIMEOUT:10m}
         # Tags to use when registering service
-        tags: project_name=processor-service, version=1.0-SNAPSHOT, commit_id=${git.commit.id}, commit_time=${git.commit.time}, profiles_active=${spring.profiles.active}
+        tags: project_name=${project.name}, version=1.0-SNAPSHOT, commit_id=${git.commit.id}, commit_time=${git.commit.time}, profiles_active=${spring.profiles.active}
         # Use ip address rather than hostname during registration
         prefer-ip-address: ${SPRING_CLOUD_CONSUL_DISCOVERY_PREFER_IP_ADDRESS:false}
         # IP address to use when accessing service (must also set preferIpAddress to use)

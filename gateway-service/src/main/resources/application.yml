@@ -77,3 +77,6 @@ logging.level: # Log levels severity mapping. For instance, `logging.level.org.s
   org.springframework: INFO
   io.swagger.models.*: ERROR
   com.sample.*: DEBUG
+
+
+spring.main.allow-bean-definition-overriding: true

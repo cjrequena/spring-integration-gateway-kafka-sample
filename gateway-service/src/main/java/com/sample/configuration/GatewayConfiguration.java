@@ -11,8 +11,6 @@ import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
 import org.springframework.messaging.Message;
 
-import java.util.UUID;
-
 @Configuration
 @EnableIntegration
 public class GatewayConfiguration {

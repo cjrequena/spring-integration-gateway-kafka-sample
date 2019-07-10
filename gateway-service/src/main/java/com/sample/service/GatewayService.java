@@ -1,9 +1,9 @@
 package com.sample.service;
 
-  import com.sample.channel.KafkaChannel;
-  import org.springframework.integration.annotation.Gateway;
-  import org.springframework.integration.annotation.MessagingGateway;
-  import org.springframework.stereotype.Service;
+import com.sample.channel.KafkaChannel;
+import org.springframework.integration.annotation.Gateway;
+import org.springframework.integration.annotation.MessagingGateway;
+import org.springframework.stereotype.Service;
 
 @Service
 @MessagingGateway
