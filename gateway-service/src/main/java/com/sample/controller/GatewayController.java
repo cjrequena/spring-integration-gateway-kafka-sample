@@ -1,6 +1,8 @@
 package com.sample.controller;
 
 import com.sample.configuration.thread.ThreadPoolMonitor;
+import com.sample.dto.RequestV1DTO;
+import com.sample.dto.RequestV2DTO;
 import com.sample.service.GatewayService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import javax.annotation.PostConstruct;
+import java.util.UUID;
 import java.util.concurrent.ThreadPoolExecutor;
 
 @Log4j2
@@ -39,7 +42,33 @@ public class GatewayController {
     DeferredResult<ResponseEntity<?>> deferredResult = new DeferredResult<>(500l);
     String operationIdentifier = java.util.UUID.randomUUID().toString();
     threadPoolExecutor.submit(() -> {
-      deferredResult.setResult(ResponseEntity.ok(this.gateway.process(string)));
+      RequestV1DTO requestV1DTO = new RequestV1DTO();
+      requestV1DTO.setText(string);
+      deferredResult.setResult(ResponseEntity.ok(this.gateway.process(requestV1DTO).getText()));
+    });
+    return deferredResult;
+  }
+
+  @GetMapping(value = "/string-2/{string}")
+  public DeferredResult<ResponseEntity<?>> process2(@PathVariable("string") String string) {
+    DeferredResult<ResponseEntity<?>> deferredResult = new DeferredResult<>(500l);
+    String operationIdentifier = java.util.UUID.randomUUID().toString();
+    threadPoolExecutor.submit(() -> {
+      RequestV2DTO requestV2DTO = new RequestV2DTO();
+      requestV2DTO.setText(string);
+      deferredResult.setResult(ResponseEntity.ok(this.gateway.process(requestV2DTO).getText()));
+    });
+    return deferredResult;
+  }
+
+  @GetMapping(value = "/string-3/{string}")
+  public DeferredResult<ResponseEntity<?>> process3(@PathVariable("string") String string) {
+    DeferredResult<ResponseEntity<?>> deferredResult = new DeferredResult<>(500l);
+    String operationIdentifier = java.util.UUID.randomUUID().toString();
+    threadPoolExecutor.submit(() -> {
+      RequestV1DTO requestV1DTO = new RequestV1DTO();
+      requestV1DTO.setText(string);
+      deferredResult.setResult(ResponseEntity.ok(this.gateway.processSecondary(requestV1DTO).getText()));
     });
     return deferredResult;
   }

@@ -1,4 +1,4 @@
-package com.sample.channel;
+package com.sample.configuration;
 
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
@@ -11,13 +11,13 @@ public interface KafkaChannel {
   String REPLY_CHANNEL_2 = "reply_channel_2";
   String REQUEST_CHANNEL_2 = "request_channel_2";
 
-  @Input(REPLY_CHANNEL)
-  SubscribableChannel reply();
-  @Output(REQUEST_CHANNEL)
-  MessageChannel request();
+  @Output(REPLY_CHANNEL)
+  MessageChannel reply();
+  @Input(REQUEST_CHANNEL)
+  SubscribableChannel request();
 
-  @Input(REPLY_CHANNEL_2)
-  SubscribableChannel reply2();
-  @Output(REQUEST_CHANNEL_2)
-  MessageChannel request2();
+  @Output(REPLY_CHANNEL_2)
+  MessageChannel reply2();
+  @Input(REQUEST_CHANNEL_2)
+  SubscribableChannel request2();
 }

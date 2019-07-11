@@ -36,36 +36,39 @@ management.info.env.enabled: true # Whether to enable environment info.
 management.info.git.enabled: true # Whether to enable git info.
 management.info.git.mode: full # Mode to use to expose git information.
 
+#------------------------------
 # KAFKA
-# see https://docs.spring.io/spring-cloud-stream/docs/current/reference/htmlsingle/#consumer-groups
-# see https://docs.spring.io/autorepo/docs/spring-cloud-stream-binder-kafka-docs/1.1.0.M1/reference/htmlsingle/
-spring.cloud.stream.bindings:
-  request_channel:
-    destination: request-topic # The target destination of a channel on the bound middleware (e.g., the RabbitMQ exchange or Kafka topic).
-    #group: request-group # The consumer group of the channel. Applies only to inbound bindings. See Consumer Groups.
-    content-type: application/json
-    binder: kafka # The binder used by this binding. See Multiple Binders on the Classpath for details.
-  reply_channel:
-    destination: reply-topic # The target destination of a channel on the bound middleware (e.g., the RabbitMQ exchange or Kafka topic).
-    #group: reply-group # The consumer group of the channel. Applies only to inbound bindings. See Consumer Groups.
-    content-type: application/json
-    binder: kafka # The binder used by this binding. See Multiple Binders on the Classpath for details.
-spring.cloud.stream.kafka.binder:
-  brokers: localhost # A list of brokers to which the Kafka binder will connect.
-  defaultBrokerPort: 9092 # This sets the default port when no port is configured in the broker list
-  zkNodes: localhost # A list of ZooKeeper nodes to which the Kafka binder can connect.
-  defaultZkPort: 2181 # This sets the default port when no port is configured in the node list
-  #configuration: # Key/Value map of client properties (both producers and consumer) passed to all clients created by the binder. Due to the fact that these properties will be used by both producers and consumers, usage should be restricted to common properties, especially security settings. Default: Empty map.
-  headers: x-retries #  The list of custom headers that will be transported by the binder. Default: empty.
-  healthTimeout: 60 # The time to wait to get partition information in seconds; default 60. Health will report as down if this timer expires.
-  offsetUpdateTimeWindow: 10000 # The frequency, in milliseconds, with which offsets are saved. Ignored if 0.
-  offsetUpdateCount: 0 # The frequency, in number of updates, which which consumed offsets are persisted. Ignored if 0. Mutually exclusive with offsetUpdateTimeWindow
-  requiredAcks: 1 # The number of required acks on the broker.
-  minPartitionCount: 1 # Effective only if autoCreateTopics or autoAddPartitions is set
-  replicationFactor: 1 # The replication factor of auto-created topics if autoCreateTopics is active.
-  autoCreateTopics: true # If set to true, the binder will create new topics automatically.
-  autoAddPartitions: true # If set to true, the binder will create add new partitions if required
-  socketBufferSize: 1000000000 # Size (in bytes) of the socket buffer to be used by the Kafka consumers
+#------------------------------
+spring.cloud.stream:
+  kafka.binder:
+    autoCreateTopics: true # true - only for develop and test environments
+    autoAddPartitions: true
+    healthTimeout: 10
+    requiredAcks: 1
+    minPartitionCount: 1
+    replicationFactor: 1
+    brokers: localhost
+    defaultBrokerPort: 9092
+
+  bindings:
+    request_channel:
+      destination: request-topic
+      content-type: application/json
+      binder: kafka
+    reply_channel:
+      destination: reply-topic
+      content-type: application/json
+      binder: kafka
+
+    request_channel_2:
+      destination: request-topic-2
+      content-type: application/json
+      binder: kafka
+    reply_channel_2:
+      destination: reply-topic-2
+      content-type: application/json
+      binder: kafka
+
 spring.cloud.sleuth:
   json:
     enabled: false
