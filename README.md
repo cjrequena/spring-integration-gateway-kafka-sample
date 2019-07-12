@@ -1,1 +1,1 @@
-![Alt text](sequence_diagram.png?raw=true "Sequence Diagram")
+![Alt text](gateway_diagram.png?raw=true "Diagram")
