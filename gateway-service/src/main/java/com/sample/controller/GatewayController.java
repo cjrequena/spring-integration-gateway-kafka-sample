@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import javax.annotation.PostConstruct;
-import java.util.UUID;
 import java.util.concurrent.ThreadPoolExecutor;
 
 @Log4j2
@@ -28,7 +27,6 @@ public class GatewayController {
   private ThreadPoolExecutor threadPoolExecutor;
   @Autowired
   private ThreadPoolMonitor threadPoolMonitor;
-
 
   @PostConstruct
   public void init() {

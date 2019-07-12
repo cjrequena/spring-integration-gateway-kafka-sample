@@ -34,21 +34,21 @@ public class GatewayConfiguration {
   private ApplicationContext applicationContext;
 
   @PostConstruct
-  public void setUp(){
+  public void setUp() {
     AutowireCapableBeanFactory beanFactory = this.applicationContext.getAutowireCapableBeanFactory();
-    for (String streamName : OUTPUT_STREAMS){
+    for (String streamName : OUTPUT_STREAMS) {
       StandardIntegrationFlow integrationFlows = IntegrationFlows.from(streamName)
-              .enrichHeaders(HeaderEnricherSpec::headerChannelsToString)
-              .enrichHeaders(headerEnricherSpec -> headerEnricherSpec.header(KafkaConstants.INSTANCE_ID_HEADER, KafkaConstants.INSTANCE_ID))
-              .channel(streamName)
-              .get();
+        .enrichHeaders(HeaderEnricherSpec::headerChannelsToString)
+        .enrichHeaders(headerEnricherSpec -> headerEnricherSpec.header(KafkaConstants.INSTANCE_ID_HEADER, KafkaConstants.INSTANCE_ID))
+        .channel(streamName)
+        .get();
       beanFactory.initializeBean(integrationFlows, "requestFlow" + streamName);
     }
-    for (String streamName : INPUT_STREAMS){
+    for (String streamName : INPUT_STREAMS) {
       StandardIntegrationFlow integrationFlows = IntegrationFlows.from(streamName)
-              .filter(Message.class, message -> KafkaConstants.INSTANCE_ID.equals(message.getHeaders().get(KafkaConstants.INSTANCE_ID_HEADER)))
-              .channel(streamName)
-              .get();
+        .filter(Message.class, message -> KafkaConstants.INSTANCE_ID.equals(message.getHeaders().get(KafkaConstants.INSTANCE_ID_HEADER)))
+        .channel(streamName)
+        .get();
       beanFactory.initializeBean(integrationFlows, "responseFlow" + streamName);
     }
   }

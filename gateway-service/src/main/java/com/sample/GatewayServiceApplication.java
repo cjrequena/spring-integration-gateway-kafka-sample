@@ -15,7 +15,7 @@ public class GatewayServiceApplication {
    * @param args
    * @throws Exception
    */
-  public static void main(String[] args)  {
+  public static void main(String[] args) {
     try {
       SpringApplication springApplication = new SpringApplication(mainApplicationClass);
       springApplication.run(args);

@@ -16,7 +16,7 @@ import java.io.Serializable;
  *
  */
 @Data
-public class ResponseV1DTO implements Serializable{
+public class ResponseV1DTO implements Serializable {
   public static final String MEDIA_TYPE = "application/vnd.response.v1+json";
 
   private String text;

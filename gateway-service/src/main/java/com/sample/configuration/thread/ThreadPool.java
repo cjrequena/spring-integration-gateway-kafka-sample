@@ -30,7 +30,7 @@ public class ThreadPool {
 
   @Bean(name = "threadPoolExecutor")
   public ThreadPoolExecutor threadPoolExecutor() {
-   return new ThreadPoolExecutor(getCorePoolSize(),
+    return new ThreadPoolExecutor(getCorePoolSize(),
       getMaxPoolSize(),
       getKeepAliveTime(),
       TimeUnit.SECONDS,

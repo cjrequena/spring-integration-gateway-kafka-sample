@@ -1,7 +1,5 @@
 package com.sample.service;
 
-import com.sample.configuration.GatewayConfiguration;
-import com.sample.configuration.KafkaConfiguration;
 import com.sample.configuration.KafkaConstants;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;

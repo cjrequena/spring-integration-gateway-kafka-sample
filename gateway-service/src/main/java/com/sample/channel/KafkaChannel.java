@@ -13,11 +13,13 @@ public interface KafkaChannel {
 
   @Input(REPLY_CHANNEL)
   SubscribableChannel reply();
+
   @Output(REQUEST_CHANNEL)
   MessageChannel request();
 
   @Input(REPLY_CHANNEL_2)
   SubscribableChannel reply2();
+
   @Output(REQUEST_CHANNEL_2)
   MessageChannel request2();
 }

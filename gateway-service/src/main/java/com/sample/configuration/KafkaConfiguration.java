@@ -19,5 +19,4 @@ import org.springframework.context.annotation.Configuration;
 @EnableBinding(KafkaChannel.class)
 public class KafkaConfiguration {
 
-
 }
