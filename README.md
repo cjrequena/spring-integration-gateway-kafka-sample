@@ -16,9 +16,7 @@ implementations where slow aggregations, time-intensive functions, or human work
 In contrast, one-way computer communication, which is like the push-to-talk or "barge in" feature found on some phones and two-way radios, sends a message without waiting for 
 a response. Sending an email is an example of one-way communication, and another example are fieldbus sensors, such as most CAN bus sensors, which periodically and autonomously 
 send out their data, whether or not any other devices on the bus are listening for it. (Most of these systems use a "listen before talk" or other contention-based protocol so 
-multiple sensors can transmit periodic updates without any pre-coordination.) 
-
-[WIKIPEDIA](https://en.wikipedia.org/wiki/Request%E2%80%93response)
+multiple sensors can transmit periodic updates without any pre-coordination.) [WIKIPEDIA](https://en.wikipedia.org/wiki/Request%E2%80%93response)
 
 This a sample project that shows how to implement "sync over async" or "sync/async" solution using spring integration and spring cloud stream through apache kafka.
 
@@ -29,6 +27,6 @@ Integration Pattern provides a proven mechanism for synchronous message exchange
 
 ## References
 - [Request–response](https://en.wikipedia.org/wiki/Request%E2%80%93response)
-- [Request-Reply in Spring Cloud Stream] (https://github.com/spring-cloud/spring-cloud-stream/issues/815)
-- [Synchronous Request-Reply using Apache Kafka] (https://callistaenterprise.se/blogg/teknik/2018/10/26/synchronous-request-reply-over-kafka/)
-- [Synchronous Kafka: Using Spring Request-Reply ](https://dzone.com/articles/synchronous-kafka-using-spring-request-reply-1)
+- [Request-Reply in Spring Cloud Stream](https://github.com/spring-cloud/spring-cloud-stream/issues/815)
+- [Synchronous Request-Reply using Apache Kafka](https://callistaenterprise.se/blogg/teknik/2018/10/26/synchronous-request-reply-over-kafka/)
+- [Synchronous Kafka: Using Spring Request-Reply](https://dzone.com/articles/synchronous-kafka-using-spring-request-reply-1)
