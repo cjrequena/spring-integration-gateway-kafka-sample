@@ -35,7 +35,7 @@ public class GatewayController {
     monitor.start();
   }
 
-  @GetMapping(value = "/string/{string}")
+  @GetMapping(value = "v1/string/{string}")
   public DeferredResult<ResponseEntity<?>> process(@PathVariable("string") String string) {
     DeferredResult<ResponseEntity<?>> deferredResult = new DeferredResult<>(500l);
     String operationIdentifier = java.util.UUID.randomUUID().toString();
@@ -47,7 +47,7 @@ public class GatewayController {
     return deferredResult;
   }
 
-  @GetMapping(value = "/string-2/{string}")
+  @GetMapping(value = "v2/string/{string}")
   public DeferredResult<ResponseEntity<?>> process2(@PathVariable("string") String string) {
     DeferredResult<ResponseEntity<?>> deferredResult = new DeferredResult<>(500l);
     String operationIdentifier = java.util.UUID.randomUUID().toString();
@@ -59,7 +59,7 @@ public class GatewayController {
     return deferredResult;
   }
 
-  @GetMapping(value = "/string-3/{string}")
+  @GetMapping(value = "v3/string/{string}")
   public DeferredResult<ResponseEntity<?>> process3(@PathVariable("string") String string) {
     DeferredResult<ResponseEntity<?>> deferredResult = new DeferredResult<>(500l);
     String operationIdentifier = java.util.UUID.randomUUID().toString();

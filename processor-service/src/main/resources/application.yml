@@ -51,12 +51,12 @@ spring.cloud.stream:
     defaultBrokerPort: 9092
 
   bindings:
-    request_channel:
-      destination: request-topic
+    request_channel_1:
+      destination: request-topic-1
       content-type: application/json
       binder: kafka
-    reply_channel:
-      destination: reply-topic
+    reply_channel_1:
+      destination: reply-topic-1
       content-type: application/json
       binder: kafka
 

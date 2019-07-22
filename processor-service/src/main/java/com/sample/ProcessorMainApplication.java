@@ -39,7 +39,7 @@ public class ProcessorMainApplication {
     }
   }
 
-  @StreamListener(target = KafkaChannel.REQUEST_CHANNEL,
+  @StreamListener(target = KafkaChannel.REQUEST_CHANNEL_1,
     condition = "headers['" + KafkaConstants.MEDIA_TYPE_HEADER + "']=='" + RequestV1DTO.MEDIA_TYPE + "'")
   public void processV1(Message<RequestV1DTO> message) {
     ResponseV1DTO responseV1DTO = new ResponseV1DTO();
@@ -51,7 +51,7 @@ public class ProcessorMainApplication {
       .build());
   }
 
-  @StreamListener(target = KafkaChannel.REQUEST_CHANNEL,
+  @StreamListener(target = KafkaChannel.REQUEST_CHANNEL_1,
     condition = "headers['" + KafkaConstants.MEDIA_TYPE_HEADER + "']=='" + RequestV2DTO.MEDIA_TYPE + "'")
   public void processV2(Message<RequestV2DTO> message) {
     ResponseV2DTO responseV2DTO = new ResponseV2DTO();

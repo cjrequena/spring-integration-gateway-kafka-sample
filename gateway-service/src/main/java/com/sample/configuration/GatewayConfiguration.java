@@ -3,9 +3,6 @@ package com.sample.configuration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sample.channel.KafkaChannel;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.TypeDescriptor;
@@ -13,44 +10,81 @@ import org.springframework.core.convert.converter.GenericConverter;
 import org.springframework.integration.config.EnableIntegration;
 import org.springframework.integration.config.IntegrationConverter;
 import org.springframework.integration.dsl.HeaderEnricherSpec;
+import org.springframework.integration.dsl.IntegrationFlow;
 import org.springframework.integration.dsl.IntegrationFlows;
-import org.springframework.integration.dsl.StandardIntegrationFlow;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Set;
+
+import static com.sample.common.Constants.INSTANCE_ID;
+import static com.sample.common.Constants.INSTANCE_ID_HEADER;
 
 @Configuration
 @EnableIntegration
 @Slf4j
 public class GatewayConfiguration {
-  private static final String[] OUTPUT_STREAMS = {KafkaChannel.REQUEST_CHANNEL, KafkaChannel.REQUEST_CHANNEL_2};
-  private static final String[] INPUT_STREAMS = {KafkaChannel.REPLY_CHANNEL, KafkaChannel.REPLY_CHANNEL_2};
+//  private static final String[] OUTPUT_STREAMS = {KafkaChannel.REQUEST_CHANNEL_1, KafkaChannel.REQUEST_CHANNEL_2};
+//  private static final String[] INPUT_STREAMS = {KafkaChannel.REPLY_CHANNEL_1, KafkaChannel.REPLY_CHANNEL_2};
 
-  @Autowired
-  private ApplicationContext applicationContext;
+//  @Autowired
+//  private ApplicationContext applicationContext;
+//
+//  @PostConstruct
+//  public void setUp() {
+//    AutowireCapableBeanFactory beanFactory = this.applicationContext.getAutowireCapableBeanFactory();
+//    for (String streamName : OUTPUT_STREAMS) {
+//      StandardIntegrationFlow integrationFlows = IntegrationFlows.from(streamName)
+//        .enrichHeaders(HeaderEnricherSpec::headerChannelsToString)
+//        .enrichHeaders(headerEnricherSpec -> headerEnricherSpec.header(Constants.INSTANCE_ID_HEADER, Constants.INSTANCE_ID))
+//        .channel(streamName)
+//        .get();
+//      beanFactory.initializeBean(integrationFlows, "requestFlow" + streamName);
+//    }
+//    for (String streamName : INPUT_STREAMS) {
+//      StandardIntegrationFlow integrationFlows = IntegrationFlows.from(streamName)
+//        .filter(Message.class, message -> Constants.INSTANCE_ID.equals(message.getHeaders().get(Constants.INSTANCE_ID_HEADER)))
+//        .channel(streamName)
+//        .get();
+//      beanFactory.initializeBean(integrationFlows, "responseFlow" + streamName);
+//    }
+//  }
 
-  @PostConstruct
-  public void setUp() {
-    AutowireCapableBeanFactory beanFactory = this.applicationContext.getAutowireCapableBeanFactory();
-    for (String streamName : OUTPUT_STREAMS) {
-      StandardIntegrationFlow integrationFlows = IntegrationFlows.from(streamName)
-        .enrichHeaders(HeaderEnricherSpec::headerChannelsToString)
-        .enrichHeaders(headerEnricherSpec -> headerEnricherSpec.header(KafkaConstants.INSTANCE_ID_HEADER, KafkaConstants.INSTANCE_ID))
-        .channel(streamName)
-        .get();
-      beanFactory.initializeBean(integrationFlows, "requestFlow" + streamName);
-    }
-    for (String streamName : INPUT_STREAMS) {
-      StandardIntegrationFlow integrationFlows = IntegrationFlows.from(streamName)
-        .filter(Message.class, message -> KafkaConstants.INSTANCE_ID.equals(message.getHeaders().get(KafkaConstants.INSTANCE_ID_HEADER)))
-        .channel(streamName)
-        .get();
-      beanFactory.initializeBean(integrationFlows, "responseFlow" + streamName);
-    }
+
+  @Bean
+  public IntegrationFlow requestFlow1() {
+    return IntegrationFlows.from(KafkaChannel.ENRICH_REQUEST_CHANNEL_1)
+      .enrichHeaders(HeaderEnricherSpec::headerChannelsToString)
+      .enrichHeaders(headerEnricherSpec -> headerEnricherSpec.header(INSTANCE_ID_HEADER, INSTANCE_ID))
+      .channel(KafkaChannel.REQUEST_CHANNEL_1)
+      .get();
+  }
+
+  @Bean
+  public IntegrationFlow replyFlow1() {
+    return IntegrationFlows.from(KafkaChannel.REPLY_CHANNEL_1)
+      .filter(Message.class, message -> INSTANCE_ID.equals(message.getHeaders().get(INSTANCE_ID_HEADER)))
+      .channel(KafkaChannel.FILTER_REPLY_CHANNEL_1)
+      .get();
+  }
+
+  @Bean
+  public IntegrationFlow requestFlow2() {
+    return IntegrationFlows.from(KafkaChannel.ENRICH_REQUEST_CHANNEL_2)
+      .enrichHeaders(HeaderEnricherSpec::headerChannelsToString)
+      .enrichHeaders(headerEnricherSpec -> headerEnricherSpec.header(INSTANCE_ID_HEADER, INSTANCE_ID))
+      .channel(KafkaChannel.REQUEST_CHANNEL_2)
+      .get();
+  }
+
+  @Bean
+  public IntegrationFlow replyFlow2() {
+    return IntegrationFlows.from(KafkaChannel.REPLY_CHANNEL_2)
+      .filter(Message.class, message -> INSTANCE_ID.equals(message.getHeaders().get(INSTANCE_ID_HEADER)))
+      .channel(KafkaChannel.FILTER_REPLY_CHANNEL_2)
+      .get();
   }
 
   @Bean
