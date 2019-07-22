@@ -11,7 +11,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <properties>
-        <start-class>com.sample.gateway.ProcessorServiceApplication</start-class>
+        <start-class>com.sample.ProcessorServiceApplication</start-class>
     </properties>
     <dependencies>
         <!-- Spring Boot -->
